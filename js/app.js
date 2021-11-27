@@ -13,9 +13,9 @@ const insertWeather = function(data, bar) {
     bar.querySelector('.humidity__value').innerText = data.current.humidity;
     bar.querySelector('.wind-speed__value').innerText = data.current.wind_mph;
     const forecast = bar.querySelector('.weather__forecast');
-    const forecastTemp = bar.querySelectorAll('.temperature__value')
+    const forecastTemp = bar.querySelectorAll('.temperature__value');
     data.forecast.forecastday.forEach(forDay=> {
-        forecastTemp[daysCounter].innerHTML = forDay.day.avgtemp_c;
+        forecastTemp[daysCounter].innerText = forDay.day.avgtemp_c;
         daysCounter++;   
     })
     
@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', event=> {
     fetch(apiWeatherKey('auto:ip'))
         .then(response=>response.json())
         .then(data=> {
-            console.log(data);
             document.querySelector('body').classList='';
             document.querySelector('.module__weather').hidden = false;
             insertWeather(data, weatherMainBar);
