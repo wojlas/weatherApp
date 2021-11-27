@@ -23,15 +23,6 @@ const insertWeather = function(data, bar) {
 //weather for current location after page load
 const weatherModule = document.querySelector('.module__weather');
 const weatherMainBar = document.querySelector('.weather');
-const weatherCityName = weatherMainBar.querySelector('.city__name');
-const weatherCityTemperature = weatherMainBar.querySelector('.temperature');
-const weatherCityDetails = weatherMainBar.querySelector('.weather__details');
-const cityPressure = weatherCityDetails.querySelector('.pressure__value');
-const cityHumidity = weatherCityDetails.querySelector('.humidity__value');
-const cityWind = weatherCityDetails.querySelector('.wind-speed__value');
-
-const weatherForecast = document.querySelector('.weather__forecast');
-const forecastTemperature = weatherForecast.querySelectorAll('.temperature__value');
 
 document.addEventListener('DOMContentLoaded', event=> {
     fetch(apiWeatherKey('auto:ip'))
@@ -72,7 +63,9 @@ findCityBtn.addEventListener('click', event=> {
         newSpan.style.color = 'red';
         findCity.appendChild(newSpan);
     } else {
+        if (findCity.querySelector('span') !== null) {
         findCity.querySelector('span').innerText = '';
+        }
         fetch(apiWeatherKey(findCityInput.value))
         .then(response=> response.json())
         .then(data=> {
