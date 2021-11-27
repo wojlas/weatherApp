@@ -3,6 +3,7 @@ const apiWeatherKey = function(location) {
     return `http://api.weatherapi.com/v1/forecast.json?key=00182ca27e414d9f8c5163503212611&q=${location}&days=5`;
 }
 
+//function insert fetch data into weather bar
 const insertWeather = function(data, bar) {
     let daysCounter = 0;
     const weatherBar = bar.querySelector('.weather');
