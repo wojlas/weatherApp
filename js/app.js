@@ -3,6 +3,7 @@ const apiWeatherKey = function(location) {
     return `http://api.weatherapi.com/v1/forecast.json?key=00182ca27e414d9f8c5163503212611&q=${location}&days=5`;
 }
 
+//function insert fetch data into weather bar
 const insertWeather = function(data, bar) {
     let daysCounter = 0;
     const weatherBar = bar.querySelector('.weather');
@@ -23,15 +24,6 @@ const insertWeather = function(data, bar) {
 //weather for current location after page load
 const weatherModule = document.querySelector('.module__weather');
 const weatherMainBar = document.querySelector('.weather');
-const weatherCityName = weatherMainBar.querySelector('.city__name');
-const weatherCityTemperature = weatherMainBar.querySelector('.temperature');
-const weatherCityDetails = weatherMainBar.querySelector('.weather__details');
-const cityPressure = weatherCityDetails.querySelector('.pressure__value');
-const cityHumidity = weatherCityDetails.querySelector('.humidity__value');
-const cityWind = weatherCityDetails.querySelector('.wind-speed__value');
-
-const weatherForecast = document.querySelector('.weather__forecast');
-const forecastTemperature = weatherForecast.querySelectorAll('.temperature__value');
 
 document.addEventListener('DOMContentLoaded', event=> {
     fetch(apiWeatherKey('auto:ip'))
@@ -72,7 +64,9 @@ findCityBtn.addEventListener('click', event=> {
         newSpan.style.color = 'red';
         findCity.appendChild(newSpan);
     } else {
+        if (findCity.querySelector('span') !== null) {
         findCity.querySelector('span').innerText = '';
+        }
         fetch(apiWeatherKey(findCityInput.value))
         .then(response=> response.json())
         .then(data=> {
