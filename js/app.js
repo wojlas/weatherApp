@@ -6,7 +6,6 @@ const apiWeatherKey = function(location) {
 //function insert fetch data into weather bar
 const insertWeather = function(data, bar) {
     let daysCounter = 0;
-    const weatherBar = bar.querySelector('.weather');
     bar.querySelector('.city__name').innerText = data.location.name;
     bar.querySelector('.temperature__value').innerText = data.current.temp_c;
     bar.querySelector('.pressure__value').innerText = data.current.pressure_mb;
@@ -18,6 +17,7 @@ const insertWeather = function(data, bar) {
         forecastTemp[daysCounter].innerText = forDay.day.avgtemp_c;
         daysCounter++;   
     })
+    
     
 }
 
@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', event=> {
             document.querySelector('body').classList='';
             document.querySelector('.module__weather').hidden = false;
             insertWeather(data, weatherMainBar);
+            moduleHidden();
         })
         .catch(error=> console.error(error))
 })
@@ -42,6 +43,7 @@ const searchForm = document.querySelector('.module__form');
 const findCity = document.querySelector('.find-city');
 const findCityInput = findCity.querySelector('input');
 const findCityBtn = findCity.querySelector('button');
+
 
 //display form
 addCityBtn.addEventListener('click', event=> {
@@ -70,16 +72,23 @@ findCityBtn.addEventListener('click', event=> {
         .then(response=> response.json())
         .then(data=> {
             document.querySelector('body').classList='';
-            document.querySelector('.module__weather').hidden = false;
             const newDiv = weatherModule.cloneNode(true);
-            document.querySelector('#app').appendChild(newDiv);
             insertWeather(data, newDiv);
+            document.querySelector('#app').appendChild(newDiv);
+            newDiv.hidden = false;
+            searchForm.hidden = true;
+            moduleHidden();
         }).catch(error=> console.log(error))
     }
 })
 
 //hidden weather module
-weatherMainBar.previousElementSibling.addEventListener('click', e=> {
-    e.preventDefault();
-    weatherMainBar.parentElement.hidden = true;
-})
+
+function moduleHidden() {
+    document.querySelectorAll('.module__weather button').forEach(element=> {
+        element.addEventListener('click', e=> {
+            e.preventDefault();
+            element.parentElement.hidden = true;
+        })
+    })
+}
